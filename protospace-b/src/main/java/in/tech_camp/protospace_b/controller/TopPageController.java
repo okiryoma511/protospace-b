@@ -23,7 +23,7 @@ public class TopPageController {
     private final PrototypeShowRepository prototypeShowRepository;
     private final UserDetailRepository userDetailRepository;
 
-    @GetMapping("/")
+    @GetMapping("")
     public String topPage(@AuthenticationPrincipal CustomUserDetail currentUser,
         @RequestParam(name = "sort", defaultValue = "desc") String sort, Model model) {
 
