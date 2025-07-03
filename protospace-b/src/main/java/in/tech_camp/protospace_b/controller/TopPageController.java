@@ -1,5 +1,6 @@
 package in.tech_camp.protospace_b.controller;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,14 +32,15 @@ public class TopPageController {
         Integer userId = (currentUser != null) ? currentUser.getId() : null;
         model.addAttribute("user", userDetailRepository.findById(userId));
 
-        // 並び順に応じてプロトタイプを取得
-        List<PrototypeEntity> prototypes = "asc".equalsIgnoreCase(sort)
-            ? prototypeShowRepository.showAllOrderByCreatedAtAsc(userId)
-            : prototypeShowRepository.showAll(userId);
+        // すべてのプロトタイプを取得
+        List<PrototypeEntity> prototypes = prototypeShowRepository.showAll(userId);
 
-        // 公開プロトタイプだけを抽出
+        // 公開プロトタイプだけを抽出し、ソート順に応じて並び替え
         List<PrototypeEntity> publishedPrototypes = prototypes.stream()
             .filter(PrototypeEntity::isPublished)
+            .sorted("asc".equalsIgnoreCase(sort)
+                ? Comparator.comparing(PrototypeEntity::getCreatedAt) //古い順
+                : Comparator.comparing(PrototypeEntity::getCreatedAt).reversed()) //新しい順
             .collect(Collectors.toList());
 
         // モデルに追加
