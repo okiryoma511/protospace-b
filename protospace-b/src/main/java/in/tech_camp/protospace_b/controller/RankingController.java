@@ -29,11 +29,7 @@ public class RankingController {
         // いいね数順に並び替えたプロトタイプを取得
         List<PrototypeEntity> prototypes = prototypeShowRepository.findPrototypesOrderByCountDesc(userId);
 
-        List<PrototypeEntity> publishedPrototypes = prototypes.stream()
-        .filter(PrototypeEntity::isPublished)
-        .collect(Collectors.toList());
-
-        model.addAttribute("prototypes", publishedPrototypes);
+        model.addAttribute("prototypes", prototypes);
         
 
         return "prototype/ranking";

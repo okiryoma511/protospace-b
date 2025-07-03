@@ -45,6 +45,7 @@ public class TopPageController {
         model.addAttribute("prototypes", publishedPrototypes);
         model.addAttribute("sort", sort);
 
+
         // プロトタイプ検索フォームをモデルに渡す
         PrototypeSearchForm prototypeSearchForm = new PrototypeSearchForm();
         model.addAttribute("prototypeSearchForm", prototypeSearchForm);

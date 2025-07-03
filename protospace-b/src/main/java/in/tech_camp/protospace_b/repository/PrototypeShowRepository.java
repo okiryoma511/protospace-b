@@ -45,6 +45,7 @@ public interface PrototypeShowRepository {
                     nice.prototype_id
             ) n ON p.id = n.prototype_id
             LEFT JOIN prototype_read_status r ON r.prototype_id = p.id AND r.user_id = #{currentUserId}
+            WHERE p.published = true
             GROUP BY
                 p.id,
                 p.prototypeName,
@@ -99,8 +100,7 @@ public interface PrototypeShowRepository {
                     nice.prototype_id,
                     MAX(CASE WHEN nice.user_id = #{currentUserId} THEN 1 ELSE 0 END) isNice,
                     COUNT(*) niceCount
-                FROM
-                    nice
+                FROM nice
                 GROUP BY
                     nice.prototype_id
             ) n ON p.id = n.prototype_id
@@ -108,6 +108,7 @@ public interface PrototypeShowRepository {
             LEFT JOIN prototype_tags pt ON p.id = pt.prototype_id
             LEFT JOIN bookmark b ON p.id = b.prototype_id
             LEFT JOIN pin ON p.id = pin.prototype_id
+            WHERE p.published = true
             GROUP BY
                 p.id,
                 p.prototypeName,
@@ -224,7 +225,7 @@ public interface PrototypeShowRepository {
                     nice.prototype_id
             ) n ON p.id = n.prototype_id
             LEFT JOIN prototype_read_status r ON r.prototype_id = p.id AND r.user_id = #{currentUserId}
-            WHERE pt.tags_id = #{tagId} AND p.prototypeName LIKE CONCAT('%', #{prototypeName}, '%')
+            WHERE pt.tags_id = #{tagId} AND p.published = true AND p.prototypeName LIKE CONCAT('%', #{prototypeName}, '%')
             GROUP BY
                 p.id,
                 p.prototypeName,
@@ -282,7 +283,7 @@ public interface PrototypeShowRepository {
                     nice.prototype_id
             ) n ON p.id = n.prototype_id
             LEFT JOIN prototype_read_status r ON r.prototype_id = p.id AND r.user_id = #{currentUserId}
-            WHERE p.prototypeName LIKE CONCAT('%', #{prototypeName}, '%')
+            WHERE p.published = true AND p.prototypeName LIKE CONCAT('%', #{prototypeName}, '%')
             GROUP BY
                 p.id,
                 p.prototypeName,
@@ -333,12 +334,12 @@ public interface PrototypeShowRepository {
                     nice.prototype_id,
                     MAX(CASE WHEN nice.user_id = #{currentUserId} THEN 1 ELSE 0 END) isNice,
                     count(*) niceCount
-                FROM
-                    nice
+                FROM nice
                 GROUP BY
                     nice.prototype_id
             ) n ON p.id = n.prototype_id
             LEFT JOIN prototype_read_status r ON r.prototype_id = p.id AND r.user_id = #{currentUserId}
+            WHERE p.published = true
             GROUP BY
                 p.id,
                 p.prototypeName,

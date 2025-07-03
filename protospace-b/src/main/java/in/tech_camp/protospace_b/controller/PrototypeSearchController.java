@@ -55,11 +55,7 @@ public class PrototypeSearchController {
             }
         }
 
-        List<PrototypeEntity> publishedPrototypes = prototypes.stream()
-        .filter(PrototypeEntity::isPublished)
-        .collect(Collectors.toList());
-
-        model.addAttribute("prototypes", publishedPrototypes);
+        model.addAttribute("prototypes", prototypes);
         model.addAttribute("tag", tag);
         model.addAttribute("prototypeSearchForm", prototypeSearchForm);
 
